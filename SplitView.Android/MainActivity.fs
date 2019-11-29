@@ -1,12 +1,11 @@
 ﻿// Copyright 2018 Fabulous contributors. See LICENSE.md for license.
-namespace Droid
+namespace SplitView.Android
 
 
 open Android.App
 open Android.Content.PM
 open Android.Content
 open Android.OS
-open Xamarin.Forms
 open Xamarin.Forms.Platform.Android
 
 
@@ -19,9 +18,10 @@ type ChildActivity() =
         base.OnCreate (bundle)
         let app=CounterApp.Apps.app.Value
         //this.LoadApplication (CounterApp.Apps.app.Value)
-        this.SetContentView(Resource.Layout.Main)
-        let page : Android.Support.V4.App.Fragment =(app.MainPage :?>ContentPage ).CreateSupportFragment(Application.Context)
-        this.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment_frame_layout,page).Commit()|>ignore
+        let id: int=Resources.Layout.Main 
+        this.SetContentView(id)
+        let page : Android.Support.V4.App.Fragment =(app.MainPage :?>Xamarin.Forms.ContentPage ).CreateSupportFragment(Application.Context)
+        this.SupportFragmentManager.BeginTransaction().Replace(Resources.Id.fragment_frame_layout,page).Commit()|>ignore
        
         
         
