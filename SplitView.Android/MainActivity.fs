@@ -6,6 +6,7 @@ open Android.App
 open Android.Content.PM
 open Android.Content
 open Android.OS
+open Xamarin.Forms
 open Xamarin.Forms.Platform.Android
 
 
@@ -13,11 +14,14 @@ open Xamarin.Forms.Platform.Android
 
 [<Activity (Label = "CounterApp.App", Icon = "@mipmap/icon", LaunchMode=LaunchMode.SingleTask,Theme = "@style/MainTheme", ConfigurationChanges = (ConfigChanges.ScreenSize ||| ConfigChanges.Orientation))>]
 type ChildActivity() =
-    inherit FormsApplicationActivity()
-    override this.OnCreate (bundle: Bundle) =
-        
+    inherit FormsAppCompatActivity()
+    override this.OnCreate (bundle: Bundle) =     
         base.OnCreate (bundle)
-        this.LoadApplication (CounterApp.Apps.app.Value)
+        let app=CounterApp.Apps.app.Value
+        //this.LoadApplication (CounterApp.Apps.app.Value)
+        this.SetContentView(Resource.Layout.Main)
+        let page : Android.Support.V4.App.Fragment =(app.MainPage :?>ContentPage ).CreateSupportFragment(Application.Context)
+        this.SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment_frame_layout,page).Commit()|>ignore
        
         
         
